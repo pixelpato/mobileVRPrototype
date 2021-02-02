@@ -1,45 +1,54 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InteractionController : MonoBehaviour
 {
-    [HideInInspector] public GameObject lastHitObj;
+    [HideInInspector] public GameObject target;
+    private Material objMat;
+    private Material passiveMat;
+    private float outlineWidth;
 
-
-    // Update is called once per frame
     void Update()
-    {       
+    {
+        Raycast();         
+    }
+
+    void Raycast() {
         RaycastHit hit;
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity)) {
-            if(hit.collider.tag == "Interactable") {
-                // change old obj mat when looking at new obj
-                if (lastHitObj != hit.collider.gameObject && lastHitObj != null) {
-                    lastHitObj.GetComponent<Renderer>().material = lastHitObj.GetComponent<Interactable>().normMat;
-                    lastHitObj.GetComponent<Outline>().OutlineWidth = 0;
+            if (hit.collider.tag == "Interactable") {
+                // change old target mat when looking at new target object
+                if (target != hit.collider.gameObject && target != null) {
+                    objMat = passiveMat;
+                    outlineWidth = 0;
                 }
 
-                // save last hitted obj in var
-                lastHitObj = hit.collider.gameObject;
+                // save last ray hitted target in var
+                target = hit.collider.gameObject;
+                objMat = target.GetComponent<Renderer>().material;
+                passiveMat = target.GetComponent<Interactable>().normMat;
+                outlineWidth = target.GetComponent<Outline>().OutlineWidth;
 
-                // change hitted obj material
-                lastHitObj.GetComponent<Renderer>().material = lastHitObj.GetComponent<Interactable>().hoverMat;
-                lastHitObj.GetComponent<Outline>().OutlineWidth = 8;
+                // change target material
+                objMat = target.GetComponent<Interactable>().hoverMat;
+                outlineWidth = 8;
             }
             else {
-                lastHitObj.GetComponent<Renderer>().material = lastHitObj.GetComponent<Interactable>().normMat; // if ray hits non interactable obj, change prev mat back
-                lastHitObj.GetComponent<Outline>().OutlineWidth = 0;
-                lastHitObj = null; // clear reference
+                ClearMat();
             }
         }
         else {
             if (hit.collider.gameObject != null) {
-                if (lastHitObj != null)
-                    lastHitObj.GetComponent<Renderer>().material = lastHitObj.GetComponent<Interactable>().normMat; // if ray hits nothing, change prev mat back
-                lastHitObj.GetComponent<Outline>().OutlineWidth = 0;
-                lastHitObj = null; // clear reference
+                ClearMat();
             }
-        }                 
+        }
+    }
+
+    // clear hover state on passive obj
+    void ClearMat() {
+        if (target != null)
+            objMat = passiveMat;
+        outlineWidth = 0;
+        target = null;
     }
 }
