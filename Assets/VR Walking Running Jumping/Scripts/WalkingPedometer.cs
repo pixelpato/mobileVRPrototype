@@ -205,7 +205,6 @@ public class WalkingPedometer : MonoBehaviour
 
         for (float ii=0;ii< timeWalk; ii+=Time.fixedDeltaTime) 
         {
-
             float displacement;
 
             //exponential experimental function used to estimate the displacement   
@@ -225,15 +224,11 @@ public class WalkingPedometer : MonoBehaviour
             // MOVE PLAYER
             if (head != null && cc != null)
             {
-
                 cc.Move(headProyection * speedFactor* displacement * Time.fixedDeltaTime);
             }
             //RB.MovePosition(interpolate);
-            yield return new WaitForFixedUpdate();
-
-               
-        }
-      
+            yield return new WaitForFixedUpdate();              
+        }     
     }
 
     public IEnumerator jump()
