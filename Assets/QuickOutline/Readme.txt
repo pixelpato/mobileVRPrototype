@@ -1,5 +1,5 @@
-QuickOutline
-============
+Quick Outline
+=============
 
 Developed by Chris Nolet (c) 2018
 
@@ -18,9 +18,9 @@ You can also add outlines programmatically with:
     outline.OutlineColor = Color.yellow;
     outline.OutlineWidth = 5f;
 
-The outline script does a small amount of work in Awake(). For best
-results, use outline.enabled to toggle the outline. Avoid removing and
-re-adding the component if possible.
+The outline script does a small amount of work in Awake(). For best results,
+use outline.enabled to toggle the outline. Avoid removing and re-adding the
+component if possible.
 
 For large meshes, you may also like to enable 'Precompute Outline' in the
 editor. This will reduce the amount of work performed in Awake().
