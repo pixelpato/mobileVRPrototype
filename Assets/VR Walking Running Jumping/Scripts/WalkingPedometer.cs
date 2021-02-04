@@ -200,7 +200,7 @@ public class WalkingPedometer : MonoBehaviour
         Vector3 headProyection = new Vector3(0, 0, 0);
         if (head != null && cc != null)
         {
-            headProyection = new Vector3(head.transform.forward.x, 0.15f, head.transform.forward.z);
+            headProyection = new Vector3(head.transform.forward.x, head.transform.forward.y, head.transform.forward.z);
         }
 
         for (float ii=0;ii< timeWalk; ii+=Time.fixedDeltaTime) 
