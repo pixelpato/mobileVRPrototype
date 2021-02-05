@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InteractionController : MonoBehaviour
 {
@@ -38,8 +39,12 @@ public class InteractionController : MonoBehaviour
                 // collect obj when hitting the hmd-button
                 if (Input.GetButton("Fire1")) {
                     target.GetComponent<AudioSource>().Play();
-                    // fade out
-                    Destroy(target, 0.5f);
+                    if(target.name == "Title") {
+                        SceneManager.LoadScene("MainScene");
+                    }
+                    else {
+                        Destroy(target, 0.5f);
+                    }                   
                 }
             }
             else {
