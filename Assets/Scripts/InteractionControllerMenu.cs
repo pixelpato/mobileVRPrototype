@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class InteractionControllerMenu : MonoBehaviour
@@ -35,8 +36,9 @@ public class InteractionControllerMenu : MonoBehaviour
                 target.GetComponent<Renderer>().material = target.GetComponent<Interactable>().hoverMat;
 
                 // collect obj when hitting the hmd-button
-                if (Input.GetButton("Fire1")) {                   
-                    SceneManager.LoadScene("MainScene");
+                if (Input.GetButton("Fire1")) {
+                    GameObject.Find("FadeImage").GetComponent<ScreenFading>().FadeOut();
+                    StartCoroutine(LoadScene("MainScene", 2));
                 }
             }
             else {
@@ -54,5 +56,10 @@ public class InteractionControllerMenu : MonoBehaviour
             target.GetComponent<Renderer>().material = target.GetComponent<Interactable>().normMat;
         }           
         target = null;
+    }
+
+    IEnumerator LoadScene (string scene, float delay) {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(scene);
     }
 }
