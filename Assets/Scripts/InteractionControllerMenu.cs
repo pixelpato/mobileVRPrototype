@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InteractionController : MonoBehaviour
+public class InteractionControllerMenu : MonoBehaviour
 {
     [HideInInspector] public GameObject target;
     private Material objMat;
@@ -26,7 +26,6 @@ public class InteractionController : MonoBehaviour
                 // change old target mat when looking at new target object
                 if (target != hit.collider.gameObject && target != null) {
                     target.GetComponent<Renderer>().material = target.GetComponent<Interactable>().normMat;
-                    target.GetComponent<Outline>().OutlineWidth = 0;
                 }
 
                 // save last ray hitted target in var
@@ -34,18 +33,10 @@ public class InteractionController : MonoBehaviour
 
                 // change target material
                 target.GetComponent<Renderer>().material = target.GetComponent<Interactable>().hoverMat;
-                target.GetComponent<Outline>().OutlineWidth = 8;
 
                 // collect obj when hitting the hmd-button
-                if (Input.GetButton("Fire1")) {
-                    if(target.name == "Title") {
-                        SceneManager.LoadScene("MainScene");
-                        Destroy(target, 0.5f);
-                    }
-                    else {
-                        target.GetComponent<AudioSource>().Play();
-                        Destroy(target, 0.5f);
-                    }                   
+                if (Input.GetButton("Fire1")) {                   
+                    SceneManager.LoadScene("MainScene");
                 }
             }
             else {
@@ -61,7 +52,6 @@ public class InteractionController : MonoBehaviour
     void ClearMat() {
         if (target != null) {
             target.GetComponent<Renderer>().material = target.GetComponent<Interactable>().normMat;
-            target.GetComponent<Outline>().OutlineWidth = 0;
         }           
         target = null;
     }
