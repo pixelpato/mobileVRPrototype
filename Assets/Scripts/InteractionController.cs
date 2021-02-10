@@ -38,27 +38,21 @@ public class InteractionController : MonoBehaviour
 
                 // collect obj when hitting the hmd-button
                 if (Input.GetButton("Fire1")) {
-                    if(target.name == "Title") {
-                        SceneManager.LoadScene("MainScene");
-                        Destroy(target, 0.5f);
-                    }
-                    else {
-                        target.GetComponent<AudioSource>().Play();
-                        Destroy(target, 0.5f);
-                    }                   
+                    target.GetComponent<AudioSource>().Play();
+                    Destroy(target, 0.5f);                
                 }
             }
             else {
-                ClearMat();
+                ClearMaterial();
             }
         }
         else {
-            ClearMat();
+            ClearMaterial();
         }
     }
 
     // clear hover state on passive obj
-    void ClearMat() {
+    void ClearMaterial() {
         if (target != null) {
             target.GetComponent<Renderer>().material = target.GetComponent<Interactable>().normMat;
             target.GetComponent<Outline>().OutlineWidth = 0;

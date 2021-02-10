@@ -42,16 +42,16 @@ public class InteractionControllerMenu : MonoBehaviour
                 }
             }
             else {
-                ClearMat();
+                ClearMaterial();
             }
         }
         else {
-            ClearMat();
+            ClearMaterial();
         }
     }
 
     // clear hover state on passive obj
-    void ClearMat() {
+    void ClearMaterial() {
         if (target != null) {
             target.GetComponent<Renderer>().material = target.GetComponent<Interactable>().normMat;
         }           
