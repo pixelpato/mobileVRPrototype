@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ScreenFading : MonoBehaviour
 {
-    public Image fadeImage;
+    public SpriteRenderer fadeImage;
     public Color fadeColor;
     private float fadeAmount;
 
