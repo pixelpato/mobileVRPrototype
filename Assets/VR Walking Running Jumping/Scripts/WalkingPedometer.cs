@@ -79,6 +79,9 @@ public class WalkingPedometer : MonoBehaviour
 
     Coroutine corrWalk, corrJump;
 
+    public AudioClip [] stepClips;
+    public AudioSource audioSource;
+
 
     void Awake()
     {
@@ -90,9 +93,7 @@ public class WalkingPedometer : MonoBehaviour
         head = Camera.main.transform;
 
         //initialize the character controller
-        cc = GetComponent<CharacterController>();
-
-       
+        cc = GetComponent<CharacterController>();      
     }
 
     private void Update()
@@ -101,8 +102,7 @@ public class WalkingPedometer : MonoBehaviour
     }
 
     void FixedUpdate()
-    { 
-        
+    {        
         // filter input.acceleration using Lerp errasing the low and high frequencies
         currentAcceleration = Mathf.Lerp(currentAcceleration, Input.acceleration.magnitude, Time.deltaTime * fHighFilter);
         averageAcceleration = Mathf.Lerp(averageAcceleration, Input.acceleration.magnitude, Time.deltaTime * fLowFilter);
@@ -128,17 +128,18 @@ public class WalkingPedometer : MonoBehaviour
             // when the impulse value is higher than the threshold                                    
             if (delta > walkingThreshold && delta<jumpingThreshold)
             { 
-
-
                 //walk once
                 isStepTriggered = true;
-                stepsCount++; // count step when comp goes high 
+                stepsCount++; // count step when comp goes high
+
+                // play sound
+                audioSource.clip = stepClips [Random.Range(0, stepClips.Length)];
+                audioSource.Play();
 
                 if (acc != null)
                 {
                     acc.text = "" + stepsCount;
                 }
-
 
                 //get the times between steps to set the speed of walk/running
                 t1 = Time.fixedTime;
@@ -153,9 +154,8 @@ public class WalkingPedometer : MonoBehaviour
                 }
 
                 corrWalk = StartCoroutine(MoveStep());
-
-
             }
+
             //jump if it is higher than 
             else if(delta > jumpingThreshold)
             {
@@ -171,8 +171,6 @@ public class WalkingPedometer : MonoBehaviour
                 {
                     corrJump= StartCoroutine(jump());
                 }
-
-
             }
         }
         else
@@ -198,6 +196,7 @@ public class WalkingPedometer : MonoBehaviour
     public IEnumerator MoveStep()
     {
         Vector3 headProyection = new Vector3(0, 0, 0);
+
         if (head != null && cc != null)
         {
             headProyection = new Vector3(head.transform.forward.x, head.transform.forward.y, head.transform.forward.z);
@@ -224,39 +223,32 @@ public class WalkingPedometer : MonoBehaviour
             // MOVE PLAYER
             if (head != null && cc != null)
             {
-                cc.Move(headProyection * speedFactor* displacement * Time.fixedDeltaTime);
+                cc.Move(headProyection * speedFactor* displacement * Time.fixedDeltaTime);               
             }
+          
             //RB.MovePosition(interpolate);
             yield return new WaitForFixedUpdate();              
         }     
     }
 
     public IEnumerator jump()
-    {
-
-            
+    {          
         //perform jump
         isJumping = true;
         for (float ii = 0; ii < timeJump; ii += Time.fixedDeltaTime)
         {
-
             cc.Move(Vector3.up * jumpSpeed * ii+ head.forward * speedFactor * Time.fixedDeltaTime * jumpForward);
   
             yield return new WaitForFixedUpdate();
-
         }
 
         while(!cc.isGrounded)
         {
             cc.Move(head.forward * speedFactor * Time.fixedDeltaTime * jumpForward-Vector3.up*Physics.gravity.magnitude*Time.fixedDeltaTime);
-            yield return new WaitForFixedUpdate();
-            
+            yield return new WaitForFixedUpdate();           
         }
 
         //stop jump
         isJumping = false;
-
     }
-
-
 }
