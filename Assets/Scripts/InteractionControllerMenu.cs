@@ -16,7 +16,7 @@ public class InteractionControllerMenu : MonoBehaviour
 
     void Update()
     {
-        Raycast();         
+        Raycast();
     }
 
     void Raycast() {

@@ -1,13 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class InteractionController : MonoBehaviour
 {
     public AudioSource audioSource;
     public AudioClip [] instructionSFX;
-    public Material material1;
-    public Material material2;
-    public Material material3;
+    public GameObject campfire;
+
+    public Light sun;
+    public GameObject soundMng;
+    public AudioClip nightSFX;
 
     [HideInInspector] public GameObject target;
     private Material objMat;
@@ -15,6 +18,8 @@ public class InteractionController : MonoBehaviour
     private float outlineWidth;
     private int itemsCollected = 11;
     private bool fireActive;
+    private float skyBoxFade = 3.75f;
+    private float sunFade = 1.25f;
 
 
     private void Awake () {
@@ -26,7 +31,7 @@ public class InteractionController : MonoBehaviour
 
     void Update()
     {
-        Raycast();         
+        Raycast();
     }
 
     void Raycast() {
@@ -65,11 +70,14 @@ public class InteractionController : MonoBehaviour
                         // materialize & end sequence
                         itemsCollected = 0;
                         fireActive = true;
-                        target.GetComponent<AudioSource>().Play();
-                        target.transform.GetChild(0).gameObject.SetActive(true);
-                        target.GetComponent<MeshRenderer>().materials [0] = material1;
-                        target.GetComponent<MeshRenderer>().materials [1] = material2;
-                        target.GetComponent<MeshRenderer>().materials [2] = material3;                       
+
+                        GameObject newFire = Instantiate(campfire, hit.collider.transform);
+                        newFire.transform.position = hit.collider.transform.position;
+                        newFire.transform.rotation = hit.collider.transform.rotation;
+                        Destroy(hit.collider);
+
+                        // play end sequence
+                        StartCoroutine(EndSequence());
                     }
                     else if (itemsCollected < 11 && itemsCollected > 0) {
                         // "Ich habe noch nicht genügend Zweige und Steine für das Lagerfeuer gesammelt."
@@ -109,5 +117,44 @@ public class InteractionController : MonoBehaviour
         
         if(!audioSource.isPlaying)
             audioSource.Play();
+    }
+
+    IEnumerator EndSequence () {
+        // wait
+        yield return new WaitForSeconds(2);
+
+        // set scene ambient
+        StartCoroutine(FadeSkybox(3, 0.1f));
+        StartCoroutine(FadeSun(1, 0.1f));      
+        soundMng.GetComponent<AudioSource>().clip = nightSFX;
+        soundMng.GetComponent<AudioSource>().Play();
+
+        // wait
+        yield return new WaitForSeconds(6);
+
+        // fade out screen + back to menu
+        GameObject.Find("FadeImage").GetComponent<ScreenFading>().FadeOut();
+        StartCoroutine(LoadScene("StartScreen", 2));
+    }
+
+    public IEnumerator FadeSkybox (float fadeSpeed, float fadeMin) {
+        while (skyBoxFade > fadeMin) {
+            skyBoxFade -= (fadeSpeed * Time.deltaTime);
+            RenderSettings.skybox.SetFloat("_Exposure", skyBoxFade);
+            yield return null;
+        }
+    }
+
+    public IEnumerator FadeSun (float fadeSpeed, float fadeMin) {        
+        while (sunFade > fadeMin) {
+            sunFade -= (fadeSpeed * Time.deltaTime);
+            sun.intensity = sunFade;
+            yield return null;
+        }
+    }  
+
+    IEnumerator LoadScene (string scene, float delay) {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(scene);
     }
 }

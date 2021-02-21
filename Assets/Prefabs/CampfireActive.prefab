@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 29172836}
   - component: {fileID: 29172837}
   m_Layer: 0
-  m_Name: Campfire
+  m_Name: CampfireActive
   m_TagString: Campfire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,9 +62,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d582b4b3c31ba1d438b6bc9966dbf0e5, type: 2}
-  - {fileID: 2100000, guid: d582b4b3c31ba1d438b6bc9966dbf0e5, type: 2}
-  - {fileID: 2100000, guid: d582b4b3c31ba1d438b6bc9966dbf0e5, type: 2}
+  - {fileID: 2100000, guid: d0f194297900b6a4ab1d58ae4bd34a82, type: 2}
+  - {fileID: 2100000, guid: 4ec05382bd0f9c24dae02cc18c8ddf53, type: 2}
+  - {fileID: 2100000, guid: 03f7121938ffa6143ab638247c33938f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,7 +97,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 9e92d7acf0238034ba930ba400a103ab,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 0450c9ccd71ba784ca821dac41308420, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -211,7 +211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4240369953625959740
 Transform:
   m_ObjectHideFlags: 0
@@ -382,7 +382,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4f012f68397abcc41b96efe1cdd4b6c0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f012f68397abcc41b96efe1cdd4b6c0, type: 3}
