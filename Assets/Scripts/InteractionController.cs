@@ -3,6 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class InteractionController : MonoBehaviour
 {
+    public AudioSource audioSource;
+    public AudioClip [] instructionSFX;
+    public Material material1;
+    public Material material2;
+    public Material material3;
+
     [HideInInspector] public GameObject target;
     private Material objMat;
     private Material passiveMat;
@@ -13,6 +19,9 @@ public class InteractionController : MonoBehaviour
 
     private void Awake () {
         target = null;
+
+        // "Hier sollte sich irgendwo eine gute Stelle für ein Lagerfeuer finden."
+        PlayInstructions(0);
     }
 
     void Update()
@@ -50,13 +59,21 @@ public class InteractionController : MonoBehaviour
                         fireActive = true;
                         target.GetComponent<AudioSource>().Play();
                         target.transform.GetChild(0).gameObject.SetActive(true);
+
+                        target.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = material1;
+                        target.transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().material = material2;
+
+                        // "Das Lagerfeuer ist fertig!"
+                        PlayInstructions(3);
                     }
                     else if (itemsCollected < 11 && itemsCollected > 0) {
-                        // play instructions
                         // "Ich habe noch nicht genügend Zweige und Steine für das Lagerfeuer gesammelt."
+                        PlayInstructions(2);
+
                     }
-                    else if (itemsCollected == 0) {
+                    else if (itemsCollected == 0 && !fireActive) {
                         // "Das ist ein guter Platz für ein Lagerfeuer, ich sollte Zweige und Steine sammeln."
+                        PlayInstructions(1);
                     }
                     else {
                         // do nothing
@@ -79,5 +96,13 @@ public class InteractionController : MonoBehaviour
             target.GetComponent<Outline>().OutlineWidth = 0;
         }           
         target = null;
+    }
+
+    // play audio voice for player instructions
+    void PlayInstructions(int clip) {
+        audioSource.clip = instructionSFX[clip];
+        
+        if(!audioSource.isPlaying)
+            audioSource.Play();
     }
 }
