@@ -36,7 +36,7 @@ public class InteractionControllerMenu : MonoBehaviour
                 target.GetComponent<Renderer>().material = target.GetComponent<Interactable>().hoverMat;
 
                 // collect obj when hitting the hmd-button
-                if (Input.GetButton("Fire1")) {
+                if (Input.GetButtonDown("Fire1")) {
                     GameObject.Find("FadeImage").GetComponent<ScreenFading>().FadeOut();
                     StartCoroutine(LoadScene("MainScene", 2));
                 }

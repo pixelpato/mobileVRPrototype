@@ -16,7 +16,7 @@ public class InteractionController : MonoBehaviour
     private Material objMat;
     private Material passiveMat;
     private float outlineWidth;
-    private int itemsCollected = 0;
+    private int itemsCollected;
     private bool fireActive;
     private float skyBoxFade = 3.75f;
     private float sunFade = 1.25f;
@@ -42,7 +42,7 @@ public class InteractionController : MonoBehaviour
                 // change old target mat when looking at new target object
                 if (target != hit.collider.gameObject && target != null) {
                     target.GetComponent<Renderer>().material = target.GetComponent<Interactable>().normMat;
-                    target.GetComponent<Outline>().OutlineWidth = 0;
+                    target.GetComponent<Outline>().OutlineWidth = -0.1f;
                 }
 
                 // save last ray hitted target in var
@@ -53,7 +53,7 @@ public class InteractionController : MonoBehaviour
                 target.GetComponent<Outline>().OutlineWidth = 8;
 
                 // collect obj when hitting the hmd-button
-                if (Input.GetButton("Fire1")) {
+                if (Input.GetButtonDown("Fire1")) {
                     target.GetComponent<AudioSource>().Play();
                     itemsCollected++;
                     Destroy(target, 0.5f);
@@ -62,8 +62,8 @@ public class InteractionController : MonoBehaviour
             else if (hit.collider.tag == "Campfire") {
                 ClearMaterial();
 
-                if (Input.GetButton("Fire1")) {
-                    if (itemsCollected == 11) {
+                if (Input.GetButtonDown("Fire1")) {
+                    if (itemsCollected >= 11) {
                         // "Das Lagerfeuer ist fertig!"
                         PlayInstructions(3);
 
