@@ -13,7 +13,7 @@ public class InteractionController : MonoBehaviour
     private Material objMat;
     private Material passiveMat;
     private float outlineWidth;
-    private int itemsCollected = 0;
+    private int itemsCollected = 11;
     private bool fireActive;
 
 
@@ -48,23 +48,28 @@ public class InteractionController : MonoBehaviour
                 target.GetComponent<Outline>().OutlineWidth = 8;
 
                 // collect obj when hitting the hmd-button
-                if (Input.GetButton("Fire1") && hit.collider.name != "Campfire") {
+                if (Input.GetButton("Fire1")) {
                     target.GetComponent<AudioSource>().Play();
                     itemsCollected++;
+                    Destroy(target, 0.5f);
                 }
-                else {
+            }
+            else if (hit.collider.tag == "Campfire") {
+                ClearMaterial();
+
+                if (Input.GetButton("Fire1")) {
                     if (itemsCollected == 11) {
+                        // "Das Lagerfeuer ist fertig!"
+                        PlayInstructions(3);
+
                         // materialize & end sequence
                         itemsCollected = 0;
                         fireActive = true;
                         target.GetComponent<AudioSource>().Play();
                         target.transform.GetChild(0).gameObject.SetActive(true);
-
-                        target.transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().material = material1;
-                        target.transform.GetChild(2).gameObject.GetComponent<MeshRenderer>().material = material2;
-
-                        // "Das Lagerfeuer ist fertig!"
-                        PlayInstructions(3);
+                        target.GetComponent<MeshRenderer>().materials [0] = material1;
+                        target.GetComponent<MeshRenderer>().materials [1] = material2;
+                        target.GetComponent<MeshRenderer>().materials [2] = material3;                       
                     }
                     else if (itemsCollected < 11 && itemsCollected > 0) {
                         // "Ich habe noch nicht genügend Zweige und Steine für das Lagerfeuer gesammelt."

@@ -231,7 +231,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2557f8842c16b6c4cb723c8c2a776ebf, type: 3}
   - {fileID: 8300000, guid: 37548ead820d2cb4f919b592190f3945, type: 3}
   - {fileID: 8300000, guid: a4d373367a56a714c9d9d51c67c188e5, type: 3}
-  audioSource: {fileID: 621739679}
+  audioSource: {fileID: 2553913904037683131}
 --- !u!114 &2553913904037683132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fda46817cdcd8b449d3cd07d5ed0829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 621739679}
   instructionSFX:
   - {fileID: 8300000, guid: 7d27dfa3c89684744ac342e534464efc, type: 3}
   - {fileID: 8300000, guid: 102d491d9f5928b43a88d9104113fb15, type: 3}
