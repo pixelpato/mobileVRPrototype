@@ -7,6 +7,8 @@ public class InteractionController : MonoBehaviour
     private Material objMat;
     private Material passiveMat;
     private float outlineWidth;
+    private int itemsCollected = 0;
+    private bool fireActive;
 
 
     private void Awake () {
@@ -37,9 +39,28 @@ public class InteractionController : MonoBehaviour
                 target.GetComponent<Outline>().OutlineWidth = 8;
 
                 // collect obj when hitting the hmd-button
-                if (Input.GetButton("Fire1")) {
+                if (Input.GetButton("Fire1") && hit.collider.name != "Campfire") {
                     target.GetComponent<AudioSource>().Play();
-                    Destroy(target, 0.5f);                
+                    itemsCollected++;
+                }
+                else {
+                    if (itemsCollected == 11) {
+                        // materialize & end sequence
+                        itemsCollected = 0;
+                        fireActive = true;
+                        target.GetComponent<AudioSource>().Play();
+                        target.transform.GetChild(0).gameObject.SetActive(true);
+                    }
+                    else if (itemsCollected < 11 && itemsCollected > 0) {
+                        // play instructions
+                        // "Ich habe noch nicht genügend Zweige und Steine für das Lagerfeuer gesammelt."
+                    }
+                    else if (itemsCollected == 0) {
+                        // "Das ist ein guter Platz für ein Lagerfeuer, ich sollte Zweige und Steine sammeln."
+                    }
+                    else {
+                        // do nothing
+                    }
                 }
             }
             else {

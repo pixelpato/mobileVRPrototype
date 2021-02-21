@@ -81,6 +81,7 @@ public class WalkingPedometer : MonoBehaviour
 
     public AudioClip [] stepClips;
     public AudioSource audioSource;
+    private float sfxTimer = 0;
 
 
     void Awake()
@@ -130,11 +131,7 @@ public class WalkingPedometer : MonoBehaviour
             { 
                 //walk once
                 isStepTriggered = true;
-                stepsCount++; // count step when comp goes high
-
-                // play sound
-                audioSource.clip = stepClips [Random.Range(0, stepClips.Length)];
-                audioSource.Play();
+                stepsCount++; // count step when comp goes high               
 
                 if (acc != null)
                 {
@@ -153,7 +150,7 @@ public class WalkingPedometer : MonoBehaviour
                     StopCoroutine(corrWalk);
                 }
 
-                corrWalk = StartCoroutine(MoveStep());
+                corrWalk = StartCoroutine(MoveStep());               
             }
 
             //jump if it is higher than 
@@ -202,6 +199,8 @@ public class WalkingPedometer : MonoBehaviour
             headProyection = new Vector3(head.transform.forward.x, head.transform.forward.y, head.transform.forward.z);
         }
 
+        
+
         for (float ii=0;ii< timeWalk; ii+=Time.fixedDeltaTime) 
         {
             float displacement;
@@ -223,7 +222,14 @@ public class WalkingPedometer : MonoBehaviour
             // MOVE PLAYER
             if (head != null && cc != null)
             {
-                cc.Move(headProyection * speedFactor* displacement * Time.fixedDeltaTime);               
+                cc.Move(headProyection * speedFactor* displacement * Time.fixedDeltaTime);
+             
+                if(sfxTimer <= 0) {
+                    playSound();
+                    sfxTimer = 0.75f;
+                }
+
+                sfxTimer -= 1 * Time.deltaTime;
             }
           
             //RB.MovePosition(interpolate);
@@ -250,5 +256,11 @@ public class WalkingPedometer : MonoBehaviour
 
         //stop jump
         isJumping = false;
+    }
+
+    void playSound() {
+        // play sound
+        audioSource.clip = stepClips [Random.Range(0, stepClips.Length)];
+        audioSource.Play();
     }
 }

@@ -6068,11 +6068,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Campfire
       objectReference: {fileID: 0}
-    - target: {fileID: 6994993918330480410, guid: a7118841114293d46a7a20fc5a2f6e1f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6994993918330480411, guid: a7118841114293d46a7a20fc5a2f6e1f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6128,36 +6123,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6994993918491373272, guid: a7118841114293d46a7a20fc5a2f6e1f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7913488897643491050, guid: a7118841114293d46a7a20fc5a2f6e1f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7913488898890948611, guid: a7118841114293d46a7a20fc5a2f6e1f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8562082080581468630, guid: a7118841114293d46a7a20fc5a2f6e1f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: d582b4b3c31ba1d438b6bc9966dbf0e5, type: 2}
-    - target: {fileID: 8562082080581468630, guid: a7118841114293d46a7a20fc5a2f6e1f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: d582b4b3c31ba1d438b6bc9966dbf0e5, type: 2}
-    - target: {fileID: 8562082081190132167, guid: a7118841114293d46a7a20fc5a2f6e1f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: d582b4b3c31ba1d438b6bc9966dbf0e5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7118841114293d46a7a20fc5a2f6e1f, type: 3}
 --- !u!1001 &7249265698932134489
