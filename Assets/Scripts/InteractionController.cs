@@ -132,7 +132,7 @@ public class InteractionController : MonoBehaviour
         soundMng.GetComponent<AudioSource>().Play();
 
         // wait
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(8);
 
         // fade out screen + back to menu
         GameObject.Find("FadeImage").GetComponent<ScreenFading>().FadeOut();
