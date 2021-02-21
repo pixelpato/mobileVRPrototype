@@ -51,6 +51,7 @@ public class InteractionController : MonoBehaviour
                 // change target material
                 target.GetComponent<Renderer>().material = target.GetComponent<Interactable>().hoverMat;
                 target.GetComponent<Outline>().OutlineWidth = 8;
+                target.GetComponent<Outline>().OutlineColor = new Color(255, 255, 255, 255);
 
                 // collect obj when hitting the hmd-button
                 if (Input.GetButtonDown("Fire1")) {
@@ -107,6 +108,7 @@ public class InteractionController : MonoBehaviour
         if (target != null) {
             target.GetComponent<Renderer>().material = target.GetComponent<Interactable>().normMat;
             target.GetComponent<Outline>().OutlineWidth = 0;
+            target.GetComponent<Outline>().OutlineColor = new Color(255, 255, 255, 0);
         }           
         target = null;
     }
