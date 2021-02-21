@@ -16,7 +16,7 @@ public class InteractionController : MonoBehaviour
     private Material objMat;
     private Material passiveMat;
     private float outlineWidth;
-    private int itemsCollected = 11;
+    private int itemsCollected = 0;
     private bool fireActive;
     private float skyBoxFade = 3.75f;
     private float sunFade = 1.25f;
